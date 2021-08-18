@@ -1,0 +1,15 @@
+# for api
+fastapi==0.66.0 
+pydantic==1.8.2
+uvicorn[standard]==0.14.0
+injector==0.18.4
+
+# package needed
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.1/en_core_web_sm-2.3.1.tar.gz
+numpy==1.21.1
+sacremoses==0.0.43
+sentencepiece==0.1.94
+spacy==2.3.1
+torch==1.9.0
+transformers==4.3.0
+nltk==3.6.2
