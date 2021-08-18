@@ -16,9 +16,9 @@ class QG2Spec(BaseModel):
 
 class IQGService(ABC):
     @abstractmethod
-    def generate_multiple(self, context: str) -> Dict[str, Any]:
+    def generate_qg1(self, spec: QGSpec) -> Dict[str, Any]:
         raise NotImplementedError
 
     @abstractmethod
-    def generate_sentence(self, context: str) -> Dict[str, Any]:
+    def generate_qg2(self, spec: QG2Spec) -> Dict[str, Any]:
         raise NotImplementedError
