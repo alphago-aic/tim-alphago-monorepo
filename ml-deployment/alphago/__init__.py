@@ -17,8 +17,14 @@ async def startup():
 
 
 @app.post("/generate-qg1")
-def generaet_qg(spec: QGSpec):
+def generate_qg1(spec: QGSpec):
     qg_service = injector.get(IQGService)
 
-    result = qg_service.generate_qg1(spec)
-    return result
+    return qg_service.generate_qg1(spec)
+
+
+@app.post("/generate-qg2")
+def generate_qg2(spec: QG2Spec):
+    qg_service = injector.get(IQGService)
+
+    return qg_service.generate_qg2(spec)

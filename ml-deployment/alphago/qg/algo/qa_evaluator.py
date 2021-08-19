@@ -6,12 +6,12 @@ from transformers import (
 )
 from injector import inject
 
+from alphago.constants import QAE_PRETRAINED
+
 
 class QAEvaluator:
     @inject
     def __init__(self, model_dir=None):
-
-        QAE_PRETRAINED = "iarfmoose/bert-base-cased-qa-evaluator"
         self.SEQ_LENGTH = 512
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

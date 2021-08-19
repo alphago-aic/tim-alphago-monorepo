@@ -10,13 +10,12 @@ from transformers import (
 from injector import inject
 
 from .qa_evaluator import QAEvaluator
+from alphago.constants import QG_PRETRAINED
 
 
 class QuestionGenerator:
     @inject
     def __init__(self, qa_evaluator: QAEvaluator, model_dir=None):
-
-        QG_PRETRAINED = "iarfmoose/t5-base-question-generator"
         self.ANSWER_TOKEN = "<answer>"
         self.CONTEXT_TOKEN = "<context>"
         self.SEQ_LENGTH = 512

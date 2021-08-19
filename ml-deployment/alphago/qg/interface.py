@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class QGSpec(BaseModel):
-    article: str
+    text: str
     num_questions: Optional[int] 
     answer_style: str
 
@@ -12,6 +12,7 @@ class QGSpec(BaseModel):
 class QG2Spec(BaseModel):
     task: str
     model: Optional[str]
+    text: str
 
 
 class IQGService(ABC):
