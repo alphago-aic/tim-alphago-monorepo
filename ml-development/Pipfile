@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+numpy = "*"
+cmake = "*"
+tokenizers = "==0.10.1"
+transformers = {git = "https://github.com/huggingface/transformers"}
+torch = "*"
+spacy = "*"
+sentencepiece = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
