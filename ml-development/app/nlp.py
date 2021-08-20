@@ -1,4 +1,4 @@
-from .question_generator import QuestionGenerator
+from question_generator import QuestionGenerator
 import torch
 import time
 
