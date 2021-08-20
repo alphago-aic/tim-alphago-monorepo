@@ -1,0 +1,9 @@
+version: '3'
+services: 
+    nlp-api-image:
+        build: .
+        container_name: "nlp-api-container"
+        ports: 
+            - "8000:8080"
+        volumes:
+            - ./app/:/app
