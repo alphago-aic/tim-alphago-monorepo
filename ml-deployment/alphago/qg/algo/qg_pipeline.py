@@ -13,28 +13,25 @@ from transformers import(
     PreTrainedTokenizer,
 )
 
+from alphago.constants import (
+    QG_MODEL, QG_ANS_MODEL,
+    E2EQG_MODEL, QAQG_MODEL
+)
+
+
 logger = logging.getLogger(__name__)
+
 
 class QGPipeline:
     """Poor man's QG pipeline"""
-    def __init__(
-        self,
-        model: PreTrainedModel,
-        tokenizer: PreTrainedTokenizer,
-        ans_model: PreTrainedModel,
-        ans_tokenizer: PreTrainedTokenizer,
-        qg_format: str,
-        use_cuda: bool
-    ):
-        self.model = model
-        self.tokenizer = tokenizer
+    def __init__(self, model: str = QG_MODEL, ans_model: str = QG_ANS_MODEL):
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(model)
+        self.tokenizer = AutoTokenizer.from_pretrained(model)
 
-        self.ans_model = ans_model
-        self.ans_tokenizer = ans_tokenizer
+        self.ans_model = AutoModelForSeq2SeqLM.from_pretrained(ans_model)
+        self.ans_tokenizer = AutoTokenizer.from_pretrained(ans_model)
 
-        self.qg_format = qg_format
-
-        self.device = "cuda" if torch.cuda.is_available() and use_cuda else "cpu"
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model.to(self.device)
 
         if self.ans_model is not self.model:
@@ -47,7 +44,7 @@ class QGPipeline:
         else:
             self.model_type = "bart"
 
-    def __call__(self, inputs: str):
+    def generate(self, inputs: str, qg_format: str):
         inputs = " ".join(inputs.split())
         sents, answers = self._extract_answers(inputs)
         flat_answers = list(itertools.chain(*answers))
@@ -55,7 +52,7 @@ class QGPipeline:
         if len(flat_answers) == 0:
           return []
 
-        if self.qg_format == "prepend":
+        if qg_format == "prepend":
             qg_examples = self._prepare_inputs_for_qg_from_answers_prepend(inputs, answers)
         else:
             qg_examples = self._prepare_inputs_for_qg_from_answers_hl(sents, answers)
@@ -168,12 +165,12 @@ class QGPipeline:
     
 class MultiTaskQAQGPipeline(QGPipeline):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(model=QAQG_MODEL, **kwargs)
     
-    def __call__(self, inputs: Union[Dict, str]):
+    def generate(self, inputs: Union[Dict, str], qg_format: str):
         if type(inputs) is str:
             # do qg
-            return super().__call__(inputs)
+            return super().generate(inputs, qg_format)
         else:
             # do qa
             return self._extract_answer(inputs["question"], inputs["context"])
@@ -199,17 +196,11 @@ class MultiTaskQAQGPipeline(QGPipeline):
 
 
 class E2EQGPipeline:
-    def __init__(
-        self,
-        model: PreTrainedModel,
-        tokenizer: PreTrainedTokenizer,
-        use_cuda: bool
-    ) :
+    def __init__(self):
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(E2EQG_MODEL)
+        self.tokenizer = AutoTokenizer.from_pretrained(E2EQG_MODEL)
 
-        self.model = model
-        self.tokenizer = tokenizer
-
-        self.device = "cuda" if torch.cuda.is_available() and use_cuda else "cpu"
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model.to(self.device)
 
         assert self.model.__class__.__name__ in ["T5ForConditionalGeneration", "BartForConditionalGeneration"]
@@ -227,7 +218,7 @@ class E2EQGPipeline:
             "early_stopping": True,
         }
     
-    def __call__(self, context: str, **generate_kwargs):
+    def generate(self, context: str, **generate_kwargs):
         inputs = self._prepare_inputs_for_e2e_qg(context)
 
         # TODO: when overrding default_generate_kwargs all other arguments need to be passsed

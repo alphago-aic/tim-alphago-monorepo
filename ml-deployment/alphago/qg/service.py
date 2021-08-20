@@ -23,4 +23,4 @@ class QGService(IQGService):
         )
 
     def generate_qg2(self, spec: QG2Spec) -> Dict[str, Any]:
-        
+        pass
