@@ -45,7 +45,7 @@ def main():
     dev_output_qa = "data/processed/qa-dev-v2.0-processed.csv"
 
     process_data(train_filename, train_output_qg, train_output_qa, 0, 8192)
-    process_data(dev_filename, dev_output_qg, dev_output_qa, 2048)
+    process_data(dev_filename, dev_output_qg, dev_output_qa, 0, 2048)
 
 
 if __name__ == "__main__":
