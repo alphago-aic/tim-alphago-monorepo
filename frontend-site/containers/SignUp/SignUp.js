@@ -13,7 +13,7 @@ export default function SignUp() {
     e.preventDefault()
     setLoading(true)
     setTimeout(() => {
-      router.push("/dashboard")
+      router.push("/homepage")
     }, 2000);
   }
 
