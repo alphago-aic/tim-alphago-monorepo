@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 
-from alphago.qg.interface import IQGService, QGSpec, QG2Spec
+from alphago.qg.interface import IQGService, QGSpec
 from alphago.di import injector
+from .response import BaseResponse
 
 app = FastAPI()
 
@@ -16,15 +17,16 @@ async def startup():
     injector.get(IQGService)
 
 
-@app.post("/generate-qg1")
-def generate_qg1(spec: QGSpec):
+@app.post("/generate", response_model=BaseResponse)
+def generate(spec: QGSpec):
     qg_service = injector.get(IQGService)
 
-    return qg_service.generate_qg1(spec)
-
-
-@app.post("/generate-qg2")
-def generate_qg2(spec: QG2Spec):
-    qg_service = injector.get(IQGService)
-
-    return qg_service.generate_qg2(spec)
+    try:
+        result = qg_service.generate(spec)
+        return BaseResponse(
+            status="success", data=result
+        )
+    except Exception as e:
+        return BaseResponse(
+            status="failed", message=f"Error: {e}"
+        )
