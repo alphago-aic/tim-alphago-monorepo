@@ -1,13 +1,12 @@
 import Layout from "../components/Layout"
 import SEO from '../components/SEO'
+import Homepage from '../containers/Homepage/Homepage'
 
-export default function Homepage() {
+export default function QGHome() {
   return (
     <Layout transparent>
       <SEO title={"Homepage - Question Generator"} />
-      <div>
-        Lorem ipsum
-      </div>
+        <Homepage/>
     </Layout>
   )
 }
