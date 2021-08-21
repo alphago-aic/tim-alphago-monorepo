@@ -20,7 +20,7 @@ class QGService(IQGService):
 
     def _generate_eng(self, spec: QGSpec) -> Dict[str, Any]:
 
-        return self.qg1.generate(
+        return self.qg.generate(
             spec.text, 
             num_questions=spec.num_questions, 
             answer_style=spec.answer_style
