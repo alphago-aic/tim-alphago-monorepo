@@ -16,6 +16,8 @@ class QAEvaluator:
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+        print(f"Using device: {self.device}")
+
         self.qae_tokenizer = AutoTokenizer.from_pretrained(QAE_PRETRAINED)
         self.qae_model = AutoModelForSequenceClassification.from_pretrained(
             QAE_PRETRAINED
