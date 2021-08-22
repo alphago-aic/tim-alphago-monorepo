@@ -6,5 +6,5 @@ services:
         ports: 
             - "80:8080"
         volumes:
-            - ./alphago:/app
+            - ./alphago:/alphago
         restart: unless-stopped

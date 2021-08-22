@@ -5,9 +5,9 @@ RUN apt-get update
 COPY ./requirements.txt ./requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY ./alphago /app
+COPY ./alphago /alphago
 RUN useradd -m myuser
 USER myuser
 
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "alphago:app", "--host", "0.0.0.0", "--port", "8080"]
