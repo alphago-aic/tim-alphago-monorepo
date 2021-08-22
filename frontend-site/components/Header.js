@@ -9,6 +9,7 @@ const HeaderStyle = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+  padding-bottom: 0;
 
   &.transparent {
     position: absolute;

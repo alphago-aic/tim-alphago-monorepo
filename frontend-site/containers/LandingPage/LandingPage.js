@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image from "next/image"
 
+import SignIn from '../SignIn/SignIn'
 import SignUp from "../SignUp/SignUp"
 import { LandingPageStyle, LandingPageLeft, LandingPageRight } from "./LandingPage.style"
 
 import headlineImage from "../../public/static/images/landing-page/headline.png"
 
 export default function LandingPage() {
+  const [isSignUp, setSignUp] = useState(true)
+
   return (
     <LandingPageStyle>
       <LandingPageLeft>
@@ -50,7 +53,11 @@ export default function LandingPage() {
         </div>
       </LandingPageLeft>
       <LandingPageRight>
-        <SignUp />
+        {isSignUp ?
+          <SignUp toSignIn={() => setSignUp(false)} />
+        :
+          <SignIn toSignUp={() => setSignUp(true)} />
+        }
       </LandingPageRight>
     </LandingPageStyle>
   )

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import QuestionGenerator from '../../components/QuestionGenerator/QuestionGenerator'
 import FlashCardComponent from "../../components/FlashCard/FlashCardComponent"
 
 const StyledFlashcardContainer = styled.div`
@@ -9,12 +10,47 @@ const StyledFlashcardContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+
+  .question-generator-wrapper {
+    max-width: 450px;
+    width: 100%;
+  }
 `
 
 export default function FlashcardContainer() {
+  const [result, setResult] = useState(null)
+  const [questionId, setQuestionId] = useState(0)
+
+  const nextQuestion = () => {
+    const nextId = questionId + 1
+    if (nextId >= result.length) {
+      setResult(null)
+      setQuestionId(0)
+    } else {
+      setQuestionId(nextId)
+    }
+  }
+  
+  const prevQuestion = () => {
+    const nextId = questionId - 1
+    if (nextId < 0) {
+      setResult(null)
+      setQuestionId(0)
+    } else {
+      setQuestionId(nextId)
+      
+    }
+  }
+
   return (
     <StyledFlashcardContainer>
-      <FlashCardComponent />
+      {result ?
+        <FlashCardComponent result={result} questionId={questionId} next={nextQuestion} prev={prevQuestion} />
+        :
+        <div className="question-generator-wrapper">
+          <QuestionGenerator setResult={setResult} result={result} />
+        </div>
+      }
     </StyledFlashcardContainer>
   )
 }
