@@ -4,21 +4,13 @@ from pydantic import BaseModel
 
 
 class QGSpec(BaseModel):
-    article: str
+    text: str
     num_questions: Optional[int] 
     answer_style: str
-
-
-class QG2Spec(BaseModel):
-    task: str
-    model: Optional[str]
+    languange: str
 
 
 class IQGService(ABC):
     @abstractmethod
-    def generate_qg1(self, spec: QGSpec) -> Dict[str, Any]:
-        raise NotImplementedError
-
-    @abstractmethod
-    def generate_qg2(self, spec: QG2Spec) -> Dict[str, Any]:
+    def generate(self, spec: QGSpec) -> Dict[str, Any]:
         raise NotImplementedError

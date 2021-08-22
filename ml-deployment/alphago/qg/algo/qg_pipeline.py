@@ -3,6 +3,9 @@ import logging
 from typing import Optional, Dict, Union
 from injector import inject
 
+import nltk
+nltk.download('punkt')
+
 from nltk import sent_tokenize
 
 import torch
@@ -218,8 +221,8 @@ class E2EQGPipeline:
             "early_stopping": True,
         }
     
-    def generate(self, context: str, **generate_kwargs):
-        inputs = self._prepare_inputs_for_e2e_qg(context)
+    def generate(self, inputs: str, **generate_kwargs):
+        inputs = self._prepare_inputs_for_e2e_qg(inputs)
 
         # TODO: when overrding default_generate_kwargs all other arguments need to be passsed
         # find a better way to do this
@@ -277,38 +280,25 @@ class E2EQGPipeline:
 
 class Pipeline:
     @inject
-    def __init__(self, qg: QGPipeline, qa_qg: MultiTaskQAQGPipeline, e2e: E2EQGPipeline):
+    def __init__(self, qg: QGPipeline, 
+        # qa_qg: MultiTaskQAQGPipeline, e2e: E2EQGPipeline
+    ):
         self.SUPPORTED_TASKS = {
             "question-generation": {
-                "impl": qg,
-                "default": {
-                    "model": "valhalla/t5-small-qg-hl",
-                    "ans_model": "valhalla/t5-small-qa-qg-hl",
-                }
+                "impl": qg
             },
-            "multitask-qa-qg": {
-                "impl": qa_qg,
-                "default": {
-                    "model": "valhalla/t5-small-qa-qg-hl",
-                }
-            },
-            "e2e-qg": {
-                "impl": e2e,
-                "default": {
-                    "model": "valhalla/t5-small-e2e-qg",
-                }
-            }
+            # "multitask-qa-qg": {
+            #     "impl": qa_qg
+            # },
+            # "e2e-qg": {
+            #     "impl": e2e
+            # }
         }
 
     def generate(
         self,
         task: str,
-        model: Optional[PreTrainedModel] = None,
-        tokenizer: Optional[Union[str, PreTrainedTokenizer]] = None,
         qg_format: Optional[str] = "highlight",
-        ans_model: Optional[PreTrainedModel] = None,
-        ans_tokenizer: Optional[Union[str, PreTrainedTokenizer]] = None,
-        use_cuda: Optional[bool] = True,
         **kwargs,
     ):
         # Retrieve the task
@@ -317,66 +307,10 @@ class Pipeline:
 
         targeted_task = self.SUPPORTED_TASKS[task]
         task_class = targeted_task["impl"]
-
-        # Use default model/config/tokenizer for the task if no model is provided
-        if model is None:
-            model = targeted_task["default"]["model"]
-        
-        # Try to infer tokenizer from model or config name (if provided as str)
-        if tokenizer is None:
-            if isinstance(model, str):
-                tokenizer = model
-            else:
-                # Impossible to guest what is the right tokenizer here
-                raise Exception(
-                    "Impossible to guess which tokenizer to use. "
-                    "Please provided a PretrainedTokenizer class or a path/identifier to a pretrained tokenizer."
-                )
-        
-        # Instantiate tokenizer if needed
-        if isinstance(tokenizer, (str, tuple)):
-            if isinstance(tokenizer, tuple):
-                # For tuple we have (tokenizer name, {kwargs})
-                tokenizer = AutoTokenizer.from_pretrained(tokenizer[0], **tokenizer[1])
-            else:
-                tokenizer = AutoTokenizer.from_pretrained(tokenizer)
-        
-        # Instantiate model if needed
-        if isinstance(model, str):
-            model = AutoModelForSeq2SeqLM.from_pretrained(model)
-        
-        if task == "question-generation":
-            if ans_model is None:
-                # load default ans model
-                ans_model = targeted_task["default"]["ans_model"]
-                ans_tokenizer = AutoTokenizer.from_pretrained(ans_model)
-                ans_model = AutoModelForSeq2SeqLM.from_pretrained(ans_model)
-            else:
-                # Try to infer tokenizer from model or config name (if provided as str)
-                if ans_tokenizer is None:
-                    if isinstance(ans_model, str):
-                        ans_tokenizer = ans_model
-                    else:
-                        # Impossible to guest what is the right tokenizer here
-                        raise Exception(
-                            "Impossible to guess which tokenizer to use. "
-                            "Please provided a PretrainedTokenizer class or a path/identifier to a pretrained tokenizer."
-                        )
-                
-                # Instantiate tokenizer if needed
-                if isinstance(ans_tokenizer, (str, tuple)):
-                    if isinstance(ans_tokenizer, tuple):
-                        # For tuple we have (tokenizer name, {kwargs})
-                        ans_tokenizer = AutoTokenizer.from_pretrained(ans_tokenizer[0], **ans_tokenizer[1])
-                    else:
-                        ans_tokenizer = AutoTokenizer.from_pretrained(ans_tokenizer)
-
-                if isinstance(ans_model, str):
-                    ans_model = AutoModelForSeq2SeqLM.from_pretrained(ans_model)
         
         if task == "e2e-qg":
-            return task_class(model=model, tokenizer=tokenizer, use_cuda=use_cuda)
+            return task_class.generate(**kwargs)
         elif task == "question-generation":
-            return task_class(model=model, tokenizer=tokenizer, ans_model=ans_model, ans_tokenizer=ans_tokenizer, qg_format=qg_format, use_cuda=use_cuda)
+            return task_class.generate(qg_format=qg_format, **kwargs)
         else:
-            return task_class(model=model, tokenizer=tokenizer, ans_model=model, ans_tokenizer=tokenizer, qg_format=qg_format, use_cuda=use_cuda)
+            return task_class.generate(qg_format=qg_format, **kwargs)
