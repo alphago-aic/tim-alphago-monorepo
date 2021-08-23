@@ -36,7 +36,7 @@ const StyledFlashCard = styled.div`
 
     button {
       width: 120px;
-      margin: 0 8px;
+      margin: 6px 8px;
       font-size: 1.05em;
     }
 
@@ -66,7 +66,8 @@ const StyledFlashCard = styled.div`
     position: relative;
 
     h4 {
-      margin-top: 20px;
+      margin-top: 15px;
+      padding-top: 20px;
       margin-bottom: 6px;
       text-align: center;
     }
@@ -77,12 +78,29 @@ const StyledFlashCard = styled.div`
     }
 
     .answer-desc {
-      width: calc(100% - 125px);
+      width: calc(100% - 50px);
       margin: auto;
       text-align: center;
+      padding-top: 10px;
+      padding-bottom: 15px;
 
       li.wrong {
         display: none;
+      }
+    }
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .flashcard-bottom {
+      h4 {
+        margin-top: 20px;
+        padding-top: 0;
+      }
+
+      .answer-desc {
+        width: calc(100% - 140px);
+        padding-top: 0;
+        padding-bottom: 0;
       }
     }
   }

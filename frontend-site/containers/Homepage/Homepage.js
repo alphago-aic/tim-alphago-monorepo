@@ -14,7 +14,7 @@ export default function Homepage() {
       </HomepageLeft>
       <HomepageRight>
         <div>
-          <ol>
+          <ol className="qa-ordered-list">
             {result?.map((qa, idQa) => (
               <li key={idQa} className="qa-wrapper">
                 <div className="homepage-question">{qa.question}</div>
