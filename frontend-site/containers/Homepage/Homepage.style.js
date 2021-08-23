@@ -6,8 +6,7 @@ export const HomepageStyle = styled.div`
   min-height: 100vh;
   @media only screen and (min-width: 768px) {
     flex-wrap: nowrap;
-  }
-  
+  }  
 `
 
 export const HomepageLeft = styled.div`
@@ -23,7 +22,13 @@ export const HomepageLeft = styled.div`
 
 export const HomepageRight = styled.div`
   width: 100%;
-  padding: 30px 10px;
+  padding: 20px 15px;
+  min-height: 50vh;
+
+  .qa-ordered-list {
+    padding-left: 20px;
+    margin-top: 0;
+  }
 
   .qa-wrapper {
     color: ${props => props.theme.colors.primary};
@@ -50,6 +55,8 @@ export const HomepageRight = styled.div`
   
   @media only screen and (min-width: 768px) {
     width: 50%;
+    padding-left: 30px;
+    padding-right: 30px;
     padding-top: 100px;
     padding-bottom: 60px;
     max-height: 100vh;
