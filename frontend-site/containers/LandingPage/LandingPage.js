@@ -20,7 +20,7 @@ export default function LandingPage() {
           />
         </div>
         <h3>
-          SQNA <small>(read: SONA)</small> | SMART QUESTION ANSWERING &quot;Helping to understand what you read with the help of AI&quot;
+          SQNA <small>(read: SONA)</small> | SMART QUESTION ANSWERING &quot;Sharpening your understanding with the help of AI&quot;
         </h3>
         <p>
           SQNA is a web app that uses cutting-edge Natural Language Processing transformers to create question-answer pairs from given text.
@@ -58,6 +58,16 @@ export default function LandingPage() {
         :
           <SignIn toSignUp={() => setSignUp(true)} />
         }
+        <small style={{
+          display: "block",
+          textAlign: "center",
+          padding: "8px",
+          paddingTop: "18px",
+          maxWidth: "300px",
+          margin: "auto"
+        }}>
+          *This is a demo application. You can fill the form above with anything (or leave it blank).
+        </small>
       </LandingPageRight>
     </LandingPageStyle>
   )
