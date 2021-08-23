@@ -58,6 +58,16 @@ export default function LandingPage() {
         :
           <SignIn toSignUp={() => setSignUp(true)} />
         }
+        <small style={{
+          display: "block",
+          textAlign: "center",
+          padding: "8px",
+          paddingTop: "18px",
+          maxWidth: "300px",
+          margin: "auto"
+        }}>
+          *This is a demo application. You can fill the form above with anything (or leave it blank).
+        </small>
       </LandingPageRight>
     </LandingPageStyle>
   )
