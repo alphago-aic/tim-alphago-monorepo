@@ -1,4 +1,4 @@
-# PMB 2021 Recommendation Repository
+# Alphago ML Inference Repository
 
 Repository for Inference Web API of SQNA
 
