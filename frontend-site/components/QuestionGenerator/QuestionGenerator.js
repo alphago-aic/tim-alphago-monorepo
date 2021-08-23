@@ -10,6 +10,7 @@ export default function QuestionGenerator({ setResult, result }) {
   const [isEnglish, setEnIndo] = useState(false);
   const [text, setText] = useState("")
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
   const submitForm = (e) => {
     e.preventDefault()
@@ -22,9 +23,16 @@ export default function QuestionGenerator({ setResult, result }) {
         output: "string"
       })
       .then(response => {
-        setResult(response.data.output);
-        setLoading(false);
-      });
+        setResult(response.data.output)
+      }).catch((err) => {
+        if (err.response?.data?.errorMessage?.includes("Task timed out")) {
+          setError("Failed to generate QA pairs. Please reduce your text size")
+        } else {
+          setError("An error occured. Please try again later")
+        }
+      }).finally(() => {
+        setLoading(false)
+      })
     } else {
       axios.post('/api/generate-indonesia-qa', {
         text: text,
@@ -32,8 +40,15 @@ export default function QuestionGenerator({ setResult, result }) {
         answer_style: "all",
         languange: "indonesia"
       }).then(response => {
-        setResult(response.data.data);
-        setLoading(false);
+        setResult(response.data.data)
+      }).catch((err) => {
+        if (err.response?.data?.errorMessage?.includes("Task timed out")) {
+          setError("Failed to generate QA pairs. Please reduce your text size")
+        } else {
+          setError("An error occured. Please try again later")
+        }
+      }).finally(() => {
+        setLoading(false)
       })
     }
   }
@@ -56,6 +71,15 @@ export default function QuestionGenerator({ setResult, result }) {
               {result ? String(result.length) : "N/A"}
             </div>
           </div>
+          {error ? <h5 style={{
+            textAlign: "center",
+            marginTop: "0",
+            paddingBottom: "8px",
+            paddingLeft: "4px",
+            paddingRight: "4px"
+          }}>
+            {error}
+          </h5> : <></>}
         </div>
         <div className="btn-wrapper">
           <Button className="secondary" disabled={loading}>{loading ? "Loading..." : "Generate"}</Button>
