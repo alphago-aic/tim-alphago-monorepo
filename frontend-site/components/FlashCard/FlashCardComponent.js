@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from "next/image"
 
@@ -10,28 +10,33 @@ const StyledFlashCard = styled.div`
   width: 100%;
   border-radius: 12px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  text-align: center;
 
   .flashcard-top {
     background: #FFFFFF;
     border-radius: 12px;
-    padding-top: 10px;
+    padding-top: 26px;
     padding-bottom: 20px;
 
-    h2 {
+    h3 {
       color: ${props => props.theme.colors.primary};
+      width: 80%;
+      margin: auto;
     }
 
     .abcd-options {
-      width: 300px;
+      width: 90%;
       text-align: left;
       margin: auto;
       margin-bottom: 20px;
     }
 
+    .button-list {
+      text-align: center;
+    }
+
     button {
       width: 120px;
-      margin: 0 8px;
+      margin: 6px 8px;
       font-size: 1.05em;
     }
 
@@ -57,39 +62,97 @@ const StyledFlashCard = styled.div`
 
   .flashcard-bottom {
     color: white;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     position: relative;
 
     h4 {
-      margin-top: 20px;
+      margin-top: 15px;
+      padding-top: 20px;
       margin-bottom: 6px;
+      text-align: center;
     }
 
     .checklist-box {
       position: absolute;
-      left: 24px;
+      left: 12px;
+    }
+
+    .answer-desc {
+      width: calc(100% - 50px);
+      margin: auto;
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 15px;
+
+      li.wrong {
+        display: none;
+      }
+    }
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .flashcard-bottom {
+      h4 {
+        margin-top: 20px;
+        padding-top: 0;
+      }
+
+      .answer-desc {
+        width: calc(100% - 140px);
+        padding-top: 0;
+        padding-bottom: 0;
+      }
     }
   }
 `
 
-export default function FlashCardComponent() {
+export default function FlashCardComponent({ result, questionId, next, prev }) {
+  const [showAns, setShowAns] = useState(false)
+
+  const qa = result[questionId]
+  let correctAnswer = ""
+  if (typeof(qa.answer) === 'string') {
+    correctAnswer = qa.answer
+  } else {
+    qa.answer.forEach((ans, index) => {
+      if (ans.correct) {
+        const abc = String.fromCharCode('a'.charCodeAt(0) + index)
+        correctAnswer = abc + ". " + ans.answer;
+      }
+    })
+  }
+
   return (
     <StyledFlashCard>
       <div className="flashcard-top">
-        <h2>Siapa nama ayah Soekarno?</h2>
+        <h3>{questionId + 1}. {qa.question}</h3>
         <div className="abcd-options">
-          <div>a. Lorem</div>
-          <div>b. Lorem Ipsum</div>
-          <div>c. Dong Dong</div>
-          <div>d. Text Lorem</div>
+          {typeof(qa.answer) === 'string' ?
+          <></> :
+          <div>
+            <ol type="a">
+              {qa.answer.map((ans, ansId) => (
+                <li key={ansId}>
+                  {ans.answer}
+                </li>
+              ))}
+            </ol>
+          </div>
+          }
         </div>
         <div className="button-list">
-          <Button className="btn-back">BACK</Button>
-          <Button className="btn-answer">ANSWER</Button>
-          <Button className="btn-next">NEXT</Button>
+          <Button className="btn-back" onClick={() => {
+            setShowAns(false)
+            prev()
+          }}>{questionId === 0 ? "RESET" : "BACK"}</Button>
+          <Button className="btn-answer" onClick={() => setShowAns(true)}>ANSWER</Button>
+          <Button className="btn-next" onClick={() => {
+            setShowAns(false)
+            next()
+          }}>{questionId === result.length - 1 ? "RESET" : "NEXT"}</Button>
         </div>
       </div>
-      <div className="flashcard-bottom">
+      {showAns ? <div className="flashcard-bottom">
         <div className="checklist-box">
           <Image
             src="/static/images/flashcard/checklist.png"
@@ -99,8 +162,10 @@ export default function FlashCardComponent() {
           />
         </div>
         <h4>Answer:</h4>
-        <div>b. Raden Soekami Sosrodihardjo</div>
-      </div>
+        <div className="answer-desc">
+          {correctAnswer}
+        </div>
+      </div> : <></>}
     </StyledFlashCard>
   )
 }
