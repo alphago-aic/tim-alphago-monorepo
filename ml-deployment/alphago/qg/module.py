@@ -4,7 +4,6 @@ from .interface import IQGService
 from .service import QGService
 from .algo.question_generator import QuestionGenerator, QuestionGeneratorIndo
 from .algo.qa_evaluator import QAEvaluator, QAEvaluatorIndo
-from .algo.qg_pipeline import Pipeline, QGPipeline
 
 
 class QGModule(Module):
