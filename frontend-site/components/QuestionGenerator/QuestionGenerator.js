@@ -16,7 +16,7 @@ export default function QuestionGenerator({ setResult, result }) {
     e.preventDefault()
     setLoading(true)
     if (isEnglish) {
-      axios.post('/api/generate-english-qa', {
+      axios.post('/api/generate-english-qa-background', {
         input: text,
         num: 10,
         mode: "all",
@@ -34,7 +34,7 @@ export default function QuestionGenerator({ setResult, result }) {
         setLoading(false)
       })
     } else {
-      axios.post('/api/generate-indonesia-qa', {
+      axios.post('/api/generate-indonesia-qa-background', {
         text: text,
         num_questions: 10,
         answer_style: "all",
