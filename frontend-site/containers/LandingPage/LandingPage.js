@@ -20,7 +20,7 @@ export default function LandingPage() {
           />
         </div>
         <h3>
-          SQNA <small>(read: SONA)</small> | SMART QUESTION ANSWERING &quot;Sharpening your understanding with the help of AI&quot;
+          SQNA <small>(read: SONA)</small> | SMART QUESTION ANSWERING &quot;Sharpen your understanding with the help of AI&quot;
         </h3>
         <p>
           SQNA is a web app that uses cutting-edge Natural Language Processing transformers to create question-answer pairs from given text.
