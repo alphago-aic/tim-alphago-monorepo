@@ -16,7 +16,7 @@ export default function QuestionGenerator({ setResult, result }) {
     e.preventDefault()
     setLoading(true)
     if (isEnglish) {
-      axios.post('/api/generate-english-qa', {
+      axios.post('http://34.87.146.224:8000/generative', {
         input: text,
         num: 10,
         mode: "all",
@@ -34,7 +34,7 @@ export default function QuestionGenerator({ setResult, result }) {
         setLoading(false)
       })
     } else {
-      axios.post('/api/generate-indonesia-qa', {
+      axios.post('http://sqna.us-east-1.elasticbeanstalk.com/generate', {
         text: text,
         num_questions: 10,
         answer_style: "all",
