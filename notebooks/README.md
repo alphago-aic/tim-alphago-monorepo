@@ -22,7 +22,7 @@ answer_token <extracted answer> context_token <context>
 ```
 The concatenated string is then encoded and fed into the question generator model. The model architecture is `IndoT5-small`. The datasets were restructured by concatenating the answer and context fields into the previously mentioned format. The concatenated answer and context was then used as an input for training, and the question field became the targets.
 
-The datasets can be found [here](https://drive.google.com/drive/folders/13FjYisqRHkTRWWmtRpuF4-s9s_GxvJs2?usp=sharing).
+The datasets can be found [here](https://drive.google.com/drive/folders/1-wCkPQy4bhPybJ4vuvP7DDRNxAzSRtwT?usp=sharing) and kaggle version [here](https://www.kaggle.com/fathinahizzati/questionanswer).
 
 ### QA Evaluator
 [QA Evaluator HF Model](https://huggingface.co/widyanto/indobert-base-uncased-qa-evaluator)<br>
