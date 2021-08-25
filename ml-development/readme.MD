@@ -26,4 +26,4 @@ Repository for Inference Web (English) API of SQNA
 - Run `docker compose up`
 
 ### App is running on http://localhost:8000. To check the swagger documentation go to 
-### http://localhost:8000/docs
+### http://localhost:8000/docs 
