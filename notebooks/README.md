@@ -4,7 +4,7 @@
 This project is for purpose of education and learning. This question generation task is mainly for generating question-answer pair for given text or context.
 
 ### Initial experiments
-Initial experiments are conducted using the SQuADv2 dataset and T5 model. This dataset is already in Indonesian and English languages. The Indonesian version of SQuAD is provided by Wikidepia and can be fetched at [this link](https://github.com/Wikidepia/indonesian_datasets).
+Initial experiments are conducted using the SQuADv2 dataset and T5 model. This dataset is already in Indonesian and English languages. The Indonesian version of SQuAD is provided by Wikidepia and can be found at [this link](https://github.com/Wikidepia/indonesian_datasets).
 
 
 ### Answer styles
