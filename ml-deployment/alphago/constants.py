@@ -13,3 +13,6 @@ QG_PRETRAINED = "iarfmoose/t5-base-question-generator"
 
 QAE_INDO_PRETRAINED = "widyanto/indobert-base-uncased-qa-evaluator"
 QG_INDO_PRETRAINED = "widyanto/IndoT5-small-qg"
+
+QA_INDO_PRETRAINED = "Wikidepia/indobert-lite-squad"
+SUMMARIZE_INDO_PRETRAINED = 'panggi/t5-small-indonesian-summarization-cased'

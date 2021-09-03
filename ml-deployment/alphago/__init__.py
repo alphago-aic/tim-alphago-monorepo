@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from alphago.qg.interface import IQGService, QGSpec
+from alphago.qg.interface import IQGService, QGSpec, QASpec, SumSpec
 from alphago.di import injector
 from .response import BaseResponse
 
@@ -26,11 +26,40 @@ async def startup():
 
 
 @app.post("/generate", response_model=BaseResponse)
-def generate(spec: QGSpec):
+def generate_qg(spec: QGSpec):
     qg_service = injector.get(IQGService)
 
     try:
-        result = qg_service.generate(spec)
+        result = qg_service.generate_qg(spec)
+        return BaseResponse(
+            status="success", data=result
+        )
+    except Exception as e:
+        return BaseResponse(
+            status="failed", message=f"Error: {e}"
+        )
+
+
+@app.post("/qa", response_model=BaseResponse)
+def generate_qa(spec: QASpec):
+    qg_service = injector.get(IQGService)
+
+    try:
+        result = qg_service.question_answer(spec)
+        return BaseResponse(
+            status="success", data=result
+        )
+    except Exception as e:
+        return BaseResponse(
+            status="failed", message=f"Error: {e}"
+        )
+
+@app.post("/summarize", response_model=BaseResponse)
+def generate_sum(spec: SumSpec):
+    qg_service = injector.get(IQGService)
+
+    try:
+        result = qg_service.summarize(spec)
         return BaseResponse(
             status="success", data=result
         )
