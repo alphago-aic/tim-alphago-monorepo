@@ -1,6 +1,9 @@
 # Welcome to AlphaGo AIC Team
 
-Demo: https://sqna.xyz/
+Demo can be accessed [here](http://sqna.xyz/) or try this link http://sqna.xyz/
 
-## Front-end Status
-[![Netlify Status](https://api.netlify.com/api/v1/badges/44f607b5-c26e-4a3d-be50-aea456fd1d2e/deploy-status)](https://app.netlify.com/sites/sqna/deploys)
+Notebooks for our research, training, and example can be acessed [here](https://github.com/alphago-aic/tim-alphago-monorepo/tree/master/notebooks)
+
+Our Huggingface🤗 model already published and can be accessed here:
+- [QuestionGenerator](https://huggingface.co/widyanto/IndoT5-small-qg)
+- [QAEvaluator](https://huggingface.co/widyanto/indobert-base-uncased-qa-evaluator)
