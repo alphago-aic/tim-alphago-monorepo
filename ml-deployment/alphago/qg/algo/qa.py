@@ -13,7 +13,7 @@ class QuestionAnswer:
     @inject
     def __init__(self) -> None:
         self.tokenizer = AutoTokenizer.from_pretrained(QA_INDO_PRETRAINED)
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        device = 0 if torch.cuda.is_available() else -1
         print("load qa model")
         self.qa_pipeline = pipeline(
             "question-answering",
