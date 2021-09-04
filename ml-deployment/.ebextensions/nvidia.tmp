@@ -1,0 +1,11 @@
+option_settings:
+  aws:autoscaling:launchconfiguration:
+    RootVolumeType: "gp2"
+    RootVolumeSize: 60
+
+commands:
+  configure_docker_run:
+    # I had to update EB startup script so it passes `--runtime=nvidia` when running docker
+    command: sed -i 's/docker run -d/docker run --runtime=nvidia -d/' /opt/elasticbeanstalk/hooks/appdeploy/enact/00run.sh
+    # Following line will be required if docker is updated to 19.1
+    # command: sed -i 's/docker run --gpus all -d/docker run -d/' /opt/elasticbeanstalk/hooks/appdeploy/enact/00run.sh

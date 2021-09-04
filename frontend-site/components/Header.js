@@ -9,6 +9,7 @@ const HeaderStyle = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 40px;
+  padding-bottom: 0;
 
   &.transparent {
     position: absolute;
@@ -66,7 +67,7 @@ export default function Header({ transparent }) {
         <Link href="/">
           <a>
             <Image
-              src="/static/images/logo.png"
+              src={router.pathname == "/" ? "/static/images/logo.png" : "/static/images/logo-2.png"}
               alt="SQNA"
               width={116}
               height={47}

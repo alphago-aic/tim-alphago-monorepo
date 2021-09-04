@@ -1,7 +1,0 @@
-models/*
-data/*
-
-!models/.blank
-!data/.blank
-
-.ipynb_checkpoints

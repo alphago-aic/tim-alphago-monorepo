@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button"
 
 import { SignUpStyle } from "./SignUp.style"
 
-export default function SignUp() {
+export default function SignUp({ toSignIn }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -26,7 +26,7 @@ export default function SignUp() {
         <input type="password" name="password" placeholder="Password" />
         <Button disabled={loading}>{loading ? "Loading..." : "Sign Up"}</Button>
       </form>
-      <div className="already-have">Already have an account? <span>Sign in</span></div>
+      <div className="already-have">Already have an account? <span onClick={toSignIn}>Sign in</span></div>
     </SignUpStyle>
   )
 }
