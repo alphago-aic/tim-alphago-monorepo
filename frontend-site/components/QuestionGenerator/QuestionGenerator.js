@@ -15,7 +15,7 @@ export default function QuestionGenerator({ setResult, result }) {
     setLoading(true)
     setError("")
     if (isEnglish) {
-      axios.post('/api/generate-english-qa', {
+      axios.post('https://api.sqna.xyz/api2-generative/', {
         input: text,
         num: 10,
         mode: "all",
