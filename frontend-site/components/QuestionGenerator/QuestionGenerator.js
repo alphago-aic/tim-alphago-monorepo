@@ -6,6 +6,8 @@ import FreeTextForm from '../FreeTextForm/FreeTextForm'
 
 export default function QuestionGenerator({ setResult, result }) {
   const [isEnglish, setEnIndo] = useState(false);
+  const [questionType, setQuestionType] = useState("all")
+  const [questionCount, setQuestionCount] = useState(10)
   const [text, setText] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -17,12 +19,13 @@ export default function QuestionGenerator({ setResult, result }) {
     if (isEnglish) {
       axios.post('https://api.sqna.xyz/api2-generative/', {
         input: text,
-        num: 10,
-        mode: "all",
+        num: questionCount,
+        mode: questionType,
         output: "string"
       })
       .then(response => {
         setResult(response.data.output)
+        setQuestionCount(response.data.output?.length)
       }).catch((err) => {
         if (err.response?.data?.errorMessage?.includes("Task timed out")) {
           setError("Failed to generate QA pairs. Please reduce your text size")
@@ -35,11 +38,12 @@ export default function QuestionGenerator({ setResult, result }) {
     } else {
       axios.post('https://api.sqna.xyz/api1-generate', {
         text: text,
-        num_questions: 10,
-        answer_style: "all",
+        num_questions: questionCount,
+        answer_style: questionType,
         languange: "indonesia"
       }).then(response => {
         setResult(response.data.data)
+        setQuestionCount(response.data.data?.length)
       }).catch((err) => {
         if (err.response?.data?.errorMessage?.includes("Task timed out")) {
           setError("Failed to generate QA pairs. Please reduce your text size")
@@ -57,7 +61,18 @@ export default function QuestionGenerator({ setResult, result }) {
       <div>
         <Switch isOn={isEnglish} handleToggle={() => setEnIndo(!isEnglish)}/>
       </div>
-      <FreeTextForm onSubmit={submitForm} loading={loading} error={error} setText={setText} result={result} isQG />
+      <FreeTextForm
+        onSubmit={submitForm}
+        loading={loading}
+        error={error}
+        setText={setText}
+        setQuestionCount={setQuestionCount}
+        questionCount={questionCount}
+        questionType={questionType}
+        setQuestionType={setQuestionType}
+        result={result}
+        isQG
+      />
     </div>
   )
 }

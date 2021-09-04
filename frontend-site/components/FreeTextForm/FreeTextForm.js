@@ -40,16 +40,38 @@ const StyledFreeTextForm = styled.div`
     padding-top: 4px;
     padding-left: 15px;
     padding-right: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    .qa-pairs {
+      display: flex;
+      align-items: center;
+    }
+
+    h4 {
+      width: calc(100% - 65px);
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+    }
 
     .question-count {
       background: white;
       border-radius: 8px;
       color: black;
-      font-size: 1.1em;
-      padding: 8px 30px;
+      width: 65px;
+
+      input {
+        width: 100%;
+        font-size: 1.1em;
+        padding: 10px;
+      }
+    }
+
+    .question-types {
+      display: flex;
+      align-items: center;
+
+      select {
+        padding-left: 5px;
+      }
     }
   }
 
@@ -58,21 +80,35 @@ const StyledFreeTextForm = styled.div`
   }
 `
 
-function FreeTextForm({ onSubmit, loading, error, setText, result, isQG }) {
+function FreeTextForm({ onSubmit, loading, error, setText, questionCount, setQuestionCount, questionType, setQuestionType, isQG }) {
   return (
     <StyledFreeTextForm>
       <form onSubmit={onSubmit}>
         <div className="card-wrapper">
           <div className="card-top">
-            <textarea id="text-input" rows="18" placeholder="Write your text here...." onChange={(e) => {
+            <textarea id="text-input" rows="16" placeholder="Write your text here...." onChange={(e) => {
               setText(e.target.value)
             }} />
           </div>
           {isQG ? <>
             <div className="card-bottom">
-              <h4>Amount of QA pairs</h4>
-              <div className="question-count">
-                {result ? String(result.length) : "N/A"}
+              <div className="qa-pairs">
+                <h4>Amount of QA pairs</h4>
+                <div className="question-count">
+                  <input name="questions" type="number" value={questionCount} onChange={(e) => {
+                    setQuestionCount(e.target.value)
+                  }} max={99} />
+                </div>
+              </div>
+              <div className="question-types">
+                <h4>Question Type</h4>
+                <select name="question-type" value={questionType} onChange={(e) => {
+                  setQuestionType(e.target.value)
+                }}>
+                  <option value="all">All</option>
+                  <option value="sentences">Essay</option>
+                  <option value="multiple_choice">Multiple Choice</option>
+                </select>
               </div>
             </div>
             {error ? <h5 style={{
