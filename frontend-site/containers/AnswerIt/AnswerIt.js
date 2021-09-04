@@ -21,7 +21,7 @@ export default function AnswerIt() {
       question: question
     })
     .then(response => {
-      setResult(response.data?.data)
+      setResult(response.data)
     }).catch((err) => {
       if (err.response?.data?.errorMessage?.includes("Task timed out")) {
         setError("Failed to generate QA pairs. Please reduce your text size")
@@ -56,9 +56,10 @@ export default function AnswerIt() {
           }}>
             {error}
           </h5> : <></>}
-          {result?.answer ? <>
+          {result?.data?.answer ? <>
             <h4>Jawaban:</h4>
-            <p>{result.answer}</p>
+            <p>{result.data.answer}</p>
+            <h5>Confidence: {Math.round(result.data.score * 100)}%</h5>
           </> : <></>}
         </div>
       </AnswerItRight>

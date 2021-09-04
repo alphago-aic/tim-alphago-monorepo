@@ -51,6 +51,7 @@ export const HomepageRight = styled.div`
 
   .correct {
     font-weight: bold;
+    color: #1a806e;
   }
   
   @media only screen and (min-width: 768px) {

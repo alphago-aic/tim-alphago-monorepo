@@ -49,13 +49,16 @@ export const AnswerItRight = styled.div`
     margin: auto;
   }
 
-  h4, p {
-    color: white;
-  }
-
   h4 {
     padding-top: 10px;
     margin-bottom: 0;
+  }
+
+  h5 {
+    border: 1px solid black;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 6px;
   }
   
   @media only screen and (min-width: 768px) {
