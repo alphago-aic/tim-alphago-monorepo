@@ -19,7 +19,7 @@ class Summarization:
 
     def generate(self, article: str) -> str:
         input_ids = self.tokenizer.encode(article, return_tensors='pt')
-        input_ids.to(self.device)
+        input_ids = input_ids.to(self.device)
         summary_ids = self.model.generate(input_ids,
                     max_length=100, 
                     num_beams=2,
