@@ -1,6 +1,6 @@
 # Welcome to AlphaGo AIC Team
 
-Demo can be accessed [here](http://sqna.xyz/) or try this link http://sqna.xyz/
+Demo can be accessed [here](https://sqna.xyz/) or try this link https://sqna.xyz/
 
 Notebooks for our research, training, and example can be acessed [here](https://github.com/alphago-aic/tim-alphago-monorepo/tree/master/notebooks)
 

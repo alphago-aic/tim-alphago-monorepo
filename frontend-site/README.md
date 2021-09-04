@@ -1,6 +1,6 @@
 # Alphago Front-end Repository
 
-Repository for SQNA Front-end Website (http://sqna.xyz)
+Repository for SQNA Front-end Website (https://sqna.xyz)
 
 ## Getting Started
 
