@@ -14,11 +14,12 @@ class Summarization:
         print("load summarize model")
         self.tokenizer = T5Tokenizer.from_pretrained(SUMMARIZE_INDO_PRETRAINED)
         self.model = T5ForConditionalGeneration.from_pretrained(SUMMARIZE_INDO_PRETRAINED)
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(device)
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.model.to(self.device)
 
     def generate(self, article: str) -> str:
         input_ids = self.tokenizer.encode(article, return_tensors='pt')
+        input_ids.to(self.device)
         summary_ids = self.model.generate(input_ids,
                     max_length=100, 
                     num_beams=2,
