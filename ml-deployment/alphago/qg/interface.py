@@ -10,7 +10,24 @@ class QGSpec(BaseModel):
     languange: str
 
 
+class QASpec(BaseModel):
+    context: str
+    question: str
+
+
+class SumSpec(BaseModel):
+    text: str
+
+
 class IQGService(ABC):
     @abstractmethod
-    def generate(self, spec: QGSpec) -> Dict[str, Any]:
+    def generate_qg(self, spec: QGSpec) -> Dict[str, Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def question_answer(self, spec: QASpec) -> Dict[str, Any]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def summarize(self, article: str) -> str:
         raise NotImplementedError

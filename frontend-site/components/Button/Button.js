@@ -10,6 +10,12 @@ const StyledButton = styled.button`
   padding: 12px 20px;
   transition: opacity .2s;
   cursor: pointer;
+  font-weight: bold;
+
+  &.secondary {
+    background: white;
+    color: ${props => props.theme.colors.primary};
+  }
 
   &:hover {
     opacity: 0.7;
