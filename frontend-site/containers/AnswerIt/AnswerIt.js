@@ -16,7 +16,7 @@ export default function AnswerIt() {
     e.preventDefault()
     setLoading(true)
     setError("")
-    axios.post('http://3.227.253.179/qa', {
+    axios.post('https://api.sqna.xyz/qa', {
       context: text,
       question: question
     })

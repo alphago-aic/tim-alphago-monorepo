@@ -15,7 +15,7 @@ export default function QuestionGenerator({ setResult, result }) {
     setLoading(true)
     setError("")
     if (isEnglish) {
-      axios.post('http://3.227.253.179:8000/generative', {
+      axios.post('https://api.sqna.xyz/generative', {
         input: text,
         num: 10,
         mode: "all",
@@ -33,7 +33,7 @@ export default function QuestionGenerator({ setResult, result }) {
         setLoading(false)
       })
     } else {
-      axios.post('http://3.227.253.179/generate', {
+      axios.post('https://api.sqna.xyz/generate', {
         text: text,
         num_questions: 10,
         answer_style: "all",

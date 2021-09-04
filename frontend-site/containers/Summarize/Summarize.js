@@ -15,7 +15,7 @@ export default function Summarize() {
     e.preventDefault()
     setLoading(true)
     setError("")
-    axios.post('http://3.227.253.179/summarize', {
+    axios.post('https://api.sqna.xyz/summarize', {
       text: text
     })
     .then(response => {
