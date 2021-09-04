@@ -14,23 +14,23 @@ class QGService(IQGService):
     @inject
     def __init__(
         self,
-        qg: QuestionGenerator,
+        # qg: QuestionGenerator,
         qg_indo: QuestionGeneratorIndo,
         qa_indo: QuestionAnswer,
         summ: Summarization,
     ):
-        self.qg = qg
+        # self.qg = qg
         self.qg_indo = qg_indo
         self.qa_indo = qa_indo
         self.summ = summ
 
-    def _generate_eng(self, spec: QGSpec) -> Dict[str, Any]:
+    # def _generate_eng(self, spec: QGSpec) -> Dict[str, Any]:
 
-        return self.qg.generate(
-            spec.text, 
-            num_questions=spec.num_questions, 
-            answer_style=spec.answer_style
-        )
+    #     return self.qg.generate(
+    #         spec.text, 
+    #         num_questions=spec.num_questions, 
+    #         answer_style=spec.answer_style
+    #     )
 
     def _generate_indo(self, spec: QGSpec) -> Dict[str, Any]:
 
@@ -50,8 +50,8 @@ class QGService(IQGService):
         if spec.languange == "indonesia":
             return self._generate_indo(spec)
 
-        if spec.languange == "english":
-            return self._generate_eng(spec)
+        # if spec.languange == "english":
+        #     return self._generate_eng(spec)
     
     def question_answer(self, spec: QASpec) -> Dict[str, Any]:
         return self.qa_indo.generate(spec.context, spec.question)

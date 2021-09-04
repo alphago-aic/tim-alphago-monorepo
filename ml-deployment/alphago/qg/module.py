@@ -12,8 +12,8 @@ from .algo.summarize import Summarization
 class QGModule(Module):
     def configure(self, binder: Binder) -> None:
         binder.bind(IQGService, to=QGService, scope=singleton)
-        binder.bind(QuestionGenerator, to=QuestionGenerator, scope=singleton)
-        binder.bind(QAEvaluator, to=QAEvaluator, scope=singleton)
+        # binder.bind(QuestionGenerator, to=QuestionGenerator, scope=singleton)
+        # binder.bind(QAEvaluator, to=QAEvaluator, scope=singleton)
         binder.bind(QAEvaluatorIndo, to=QAEvaluatorIndo, scope=singleton)
         binder.bind(QuestionGeneratorIndo, to=QuestionGeneratorIndo, scope=singleton)
         binder.bind(QuestionAnswer, to=QuestionAnswer, scope=singleton)
