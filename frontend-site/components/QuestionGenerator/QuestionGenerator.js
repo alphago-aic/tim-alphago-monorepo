@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 import Switch from '../Switch/Switch'
-import Button from '../Button/Button'
-
-import { StyledQuestionGenerator } from "./QuestionGenerator.style"
+import FreeTextForm from '../FreeTextForm/FreeTextForm'
 
 export default function QuestionGenerator({ setResult, result }) {
   const [isEnglish, setEnIndo] = useState(false);
@@ -17,7 +15,7 @@ export default function QuestionGenerator({ setResult, result }) {
     setLoading(true)
     setError("")
     if (isEnglish) {
-      axios.post('http://sqna-english.sqna.xyz:8000/generative', {
+      axios.post('http://3.227.253.179:8000/generative', {
         input: text,
         num: 10,
         mode: "all",
@@ -35,7 +33,7 @@ export default function QuestionGenerator({ setResult, result }) {
         setLoading(false)
       })
     } else {
-      axios.post('http://sqna-indo.sqna.xyz/generate', {
+      axios.post('http://3.227.253.179/generate', {
         text: text,
         num_questions: 10,
         answer_style: "all",
@@ -55,37 +53,11 @@ export default function QuestionGenerator({ setResult, result }) {
   }
 
   return (
-    <StyledQuestionGenerator>
+    <div>
       <div>
         <Switch isOn={isEnglish} handleToggle={() => setEnIndo(!isEnglish)}/>
       </div>
-      <form onSubmit={submitForm}>
-        <div className="card-wrapper">
-          <div className="card-top">
-            <textarea id="text-input" rows="18" placeholder="Write your text here...." onChange={(e) => {
-              setText(e.target.value)
-            }} />
-          </div>
-          <div className="card-bottom">
-            <h4>Amount of QA pairs</h4>
-            <div className="question-count">
-              {result ? String(result.length) : "N/A"}
-            </div>
-          </div>
-          {error ? <h5 style={{
-            textAlign: "center",
-            marginTop: "0",
-            paddingBottom: "8px",
-            paddingLeft: "4px",
-            paddingRight: "4px"
-          }}>
-            {error}
-          </h5> : <></>}
-        </div>
-        <div className="btn-wrapper">
-          <Button className="secondary" disabled={loading}>{loading ? "Loading..." : "Generate"}</Button>
-        </div>
-      </form>
-    </StyledQuestionGenerator>
+      <FreeTextForm onSubmit={submitForm} loading={loading} error={error} setText={setText} result={result} isQG />
+    </div>
   )
 }

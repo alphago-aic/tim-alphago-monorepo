@@ -88,12 +88,22 @@ export default function Header({ transparent }) {
           <div className="nav-overlay-inside">
             <Link href="/homepage">
               <a className={router.pathname == "/homepage" ? "active" : ""}>
-                Homepage
+                QGen
               </a>
             </Link>
             <Link href="/flashcard">
               <a className={router.pathname == "/flashcard" ? "active" : ""}>
-                Flashcard
+                QGen-Flashcard
+              </a>
+            </Link>
+            <Link href="/answer-it">
+              <a className={router.pathname == "/answer-it" ? "active" : ""}>
+                AnswerIt!
+              </a>
+            </Link>
+            <Link href="/summarize">
+              <a className={router.pathname == "/summarize" ? "active" : ""}>
+                SumUp
               </a>
             </Link>
             <Link href="/">
