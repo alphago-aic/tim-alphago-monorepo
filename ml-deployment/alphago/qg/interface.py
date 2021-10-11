@@ -17,6 +17,7 @@ class QASpec(BaseModel):
 
 class SumSpec(BaseModel):
     text: str
+    max_length: int = 128
 
 
 class IQGService(ABC):

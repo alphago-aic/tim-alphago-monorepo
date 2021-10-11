@@ -57,4 +57,4 @@ class QGService(IQGService):
         return self.qa_indo.generate(spec.context, spec.question)
 
     def summarize(self, spec: SumSpec) -> str:
-        return self.summ.generate(spec.text)
+        return self.summ.generate(spec.text, spec.max_length)

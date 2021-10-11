@@ -17,16 +17,16 @@ class Summarization:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
 
-    def generate(self, article: str) -> str:
+    def generate(self, article: str, length: int = 128) -> str:
         input_ids = self.tokenizer.encode(article, return_tensors='pt')
         input_ids = input_ids.to(self.device)
         summary_ids = self.model.generate(input_ids,
-                    max_length=100, 
+                    max_length=length, 
                     num_beams=2,
                     repetition_penalty=2.5, 
                     length_penalty=1.0, 
                     early_stopping=True,
-                    no_repeat_ngram_size=2,
+                    no_repeat_ngram_size=3,
                     use_cache=True)
 
         return self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
